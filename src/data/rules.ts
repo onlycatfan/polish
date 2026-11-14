@@ -1,3 +1,5 @@
+import { ADDITIONAL_CARDS } from "./additionalCards";
+
 /** More examples per rule: [Polish with marked endings, UA, RU]; RULE_BY_CARD maps card id to rule */
 export const RULES: Record<string, [string, string, string][]> = {
   "mianownik": [["To jest syn.", "Це син.", "Это сын."], ["To jest nowy telefon.", "Це новий телефон.", "Это новый телефон."], ["To jest dobra kawa.", "Це добра кава.", "Это хороший кофе."]],
@@ -76,3 +78,5 @@ export const RULE_TRIGGERS: Record<string, string> = {
   "dopelniacz-partitive": "trochę, napić się", "dopelniacz-numeral-virile": "pięciu + mężczyźni", "dopelniacz-prepositions-c1": "z powodu, zamiast",
   "negation-keeps": "nie + Narzędnik", "narzednik-copula": "wydawać się, zostać", "mianownik-to": "X to Y", "dopelniacz-negation-infinitive": "nie chcę + bezokolicznik",
 };
+
+for (const entry of ADDITIONAL_CARDS) RULE_BY_CARD[entry.id] = entry.rule;

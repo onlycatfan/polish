@@ -1,3 +1,5 @@
+import { ADDITIONAL_CARDS } from "./additionalCards";
+
 /** Each card's word in all four cases: [Mianownik, Biernik, Dopełniacz, Narzędnik]. FORMS_KEY_BY_CARD maps plural cards. */
 export const FORMS: Record<string, string[]> = {
   "syn": ["syn", "syna", "syna", "synem"],
@@ -88,3 +90,9 @@ Object.assign(FORMS, {
   "miły człowiek": ["miły człowiek", "miłego człowieka", "miłego człowieka", "miłym człowiekiem"],
 });
 Object.assign(FORMS_KEY_BY_CARD, { m9: "synowie", m10: "wysocy", b23: "bracia", d30: "ludzie", d34: "studenci" });
+
+for (const entry of ADDITIONAL_CARDS) {
+  const key = entry.formsKey ?? entry.base;
+  FORMS[key] ??= entry.forms;
+  if (entry.formsKey) FORMS_KEY_BY_CARD[entry.id] = entry.formsKey;
+}

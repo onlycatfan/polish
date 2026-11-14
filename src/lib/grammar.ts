@@ -1,3 +1,4 @@
+import { ADDITIONAL_CARDS } from "../data/additionalCards";
 import type { Card } from "../data/cards";
 import { FORMS, FORMS_KEY_BY_CARD } from "../data/forms";
 import { EXPLANATIONS } from "../data/why";
@@ -33,7 +34,12 @@ export const endingsOf = (marked: string) => [...marked.matchAll(/\{([^}]*)\}/g)
 /** Grammatical gender, named after its GLOSS key */
 export type Gender = "masculine" | "feminine" | "neuter" | "plural";
 const MASCULINE_ENDING_IN_A = ["tata", "mężczyzna", "programista", "kierowca", "kolega"];
-const PLURAL_BASES = ["nowe telefony", "dobrzy rodzice", "polscy studenci", "polskie studentki", "nowi koledzy", "małe dzieci", "jabłka", "spodnie"];
+const PLURAL_BASES = [
+  ...["nowe telefony", "dobrzy rodzice", "polscy studenci", "polskie studentki", "nowi koledzy", "małe dzieci", "jabłka", "spodnie"],
+  ...ADDITIONAL_CARDS.filter((entry) => entry.plural).map((entry) => entry.base.toLowerCase()),
+];
+/** Feminine nouns ending in a consonant (besides -ść) */
+const FEMININE_ON_CONSONANT = ["noc", "pomoc", "odpowiedź"];
 
 export function genderOf(base: string | null): Gender | null {
   if (!base) return null;
@@ -41,7 +47,7 @@ export function genderOf(base: string | null): Gender | null {
   if (/plural/.test(lower) || PLURAL_BASES.includes(lower)) return "plural";
   const noun = lower.split(" ").pop() ?? "";
   if (MASCULINE_ENDING_IN_A.includes(noun)) return "masculine";
-  if (/a$/.test(noun) || /ść$/.test(noun) || ["noc", "pomoc"].includes(noun)) return "feminine";
+  if (/a$/.test(noun) || /ść$/.test(noun) || FEMININE_ON_CONSONANT.includes(noun)) return "feminine";
   if (/(o|e|ę|um)$/.test(noun)) return "neuter";
   return "masculine";
 }

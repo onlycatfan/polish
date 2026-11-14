@@ -1,3 +1,4 @@
+import { ADDITIONAL_CARDS } from "./additionalCards";
 import type { CaseKey } from "./cases";
 import type { Level } from "./levels";
 
@@ -109,5 +110,8 @@ const ADVANCED_CARDS: RawCard[] = [
   ["n25","C1","narzednik","Wydaje się ___.","miły człowiek","miłym człowiekiem",["miły człowiek","miłego człowieka","miłemu człowiekowi"]],
 ];
 
-export const CARDS: Card[] = [...BASIC_CARDS, ...ADVANCED_CARDS].map(([id, level, caseKey, prompt, base, answer, distractors]) => ({ id, level, caseKey, prompt, base, answer, distractors }));
+export const CARDS: Card[] = [
+  ...[...BASIC_CARDS, ...ADVANCED_CARDS].map(([id, level, caseKey, prompt, base, answer, distractors]) => ({ id, level, caseKey, prompt, base, answer, distractors })),
+  ...ADDITIONAL_CARDS.map(({ id, level, caseKey, prompt, base, answer, distractors }) => ({ id, level, caseKey, prompt, base, answer, distractors })),
+];
 export const CARD_BY_ID: Record<string, Card> = Object.fromEntries(CARDS.map((card) => [card.id, card]));

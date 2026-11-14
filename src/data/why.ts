@@ -1,4 +1,5 @@
 import type { Language } from "../i18n/language";
+import { ADDITIONAL_CARDS } from "./additionalCards";
 
 /** Why each card answer is right, per language */
 export const EXPLANATIONS: Record<Language, Record<string, string>> = {
@@ -188,3 +189,7 @@ Object.assign(EXPLANATIONS.pl, {
   n24: "Nie zmienia tylko Biernik. interesować się zostaje z Narzędnikiem: polityk{ą}.",
   n25: "wydawać się + Narzędnik, jak być: mił{ym} człowiek{iem}.",
 });
+
+for (const entry of ADDITIONAL_CARDS) {
+  for (const language of ["uk", "ru", "pl"] as const) EXPLANATIONS[language][entry.id] = entry.explanation[language];
+}
